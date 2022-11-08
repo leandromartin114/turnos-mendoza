@@ -1,17 +1,14 @@
 <h1>E-Commerce Backend</h1>
 <p>API REST built using NodeJS and NextJS through an MVC architecture.</p>
-<p>It allows a user to login/signup using a passwordless system. Search products in a catalog and process the payments with Mercado Pago.</p>
+<p>It allows a user to login/signup using a passwordless system. The API have the goal to provide appointments to the users.</p>
 <h2>Postman Documentation</h2>
-<link>https://documenter.getpostman.com/view/20242333/2s8YRpEVcb</link>
+<link>Pending</link>
 <h2>API</h2>
-<link>https://myfreemarket.vercel.app</link>
+<link>Pending</link>
 <h2>Tech Stack</h2>
 <ul>
 <li>Typescript</li>
 <li>NodeJS</li>
 <li>NextJS</li>
 <li>Firebase</li>
-<li>Algolia</li>
-<li>Airtable</li>
-<li>Mercado Pago</li>
 </ul>
