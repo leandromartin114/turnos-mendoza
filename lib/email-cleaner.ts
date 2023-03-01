@@ -1,3 +1,3 @@
 export function emailCleaner(email: string) {
-	return email.trim().toLowerCase();
+	return email.trim().toLowerCase()
 }

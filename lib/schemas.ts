@@ -1,53 +1,47 @@
-import * as yup from "yup";
-
-let orderQuerySchema = yup.mixed();
-
-let orderBodySchema = yup
-	.array()
-	.of(
-		yup
-			.object()
-			.shape({
-				title: yup.string().required(),
-				quantity: yup.number().required(),
-				currency_id: yup.string().required(),
-				unit_price: yup.number().required(),
-				color: yup.string().optional(),
-				materials: yup.string().optional(),
-			})
-			.noUnknown(true)
-			.strict()
-	)
-	.strict();
+import * as yup from 'yup'
 
 let newUserBodySchema = yup
 	.object()
 	.shape({
 		fullName: yup.string().required(),
-		document: yup.number().required(),
 		email: yup.string().email().required(),
+		phoneNumber: yup.number().required(),
 		address: yup.string().required(),
-		appointment: yup.date().required(),
+		document: yup.number().required(),
 	})
 	.noUnknown(true)
-	.strict();
+	.strict()
 
-let userDataQuerySchema = yup
-	.string()
-	.matches(/(email|fullName|address|document)/, "It's not a valid parameter");
-
-let userDataBodySchema = yup
+let getTokenBodySchema = yup
 	.object()
 	.shape({
-		content: yup.string().required(),
+		email: yup.string().email().required(),
+		code: yup.number().required(),
 	})
 	.noUnknown(true)
-	.strict();
+	.strict()
+
+let appointmentQuerySchema = yup.mixed()
+
+let appointmentBodySchema = yup
+	.array()
+	.of(
+		yup
+			.object()
+			.shape({
+				appoId: yup.number().required(),
+				fullName: yup.string().required(),
+				email: yup.string().email().required(),
+				date: yup.date().required(),
+			})
+			.noUnknown(true)
+			.strict()
+	)
+	.strict()
 
 export {
-	orderQuerySchema,
-	orderBodySchema,
+	appointmentQuerySchema,
+	appointmentBodySchema,
 	newUserBodySchema,
-	userDataQuerySchema,
-	userDataBodySchema,
-};
+	getTokenBodySchema,
+}
