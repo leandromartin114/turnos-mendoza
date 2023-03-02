@@ -25,17 +25,16 @@ export class Day {
 		})
 		return newDaySnap
 	}
-	static async findUserAppointment(userId) {
-		const snap = await collection.get()
-		const doc = snap.docs.find((d) => {
-			const appos = d.data().appointments
-			return appos.find((a) => {
-				return a.userId === userId
-			})
-		})
-
-		return snap.docs
-	}
+	// static async findUserAppointment(userId) {
+	// 	const snap = await collection.get()
+	// 	const doc = snap.docs.find((d) => {
+	// 		const appos = d.data().appointments
+	// 		return appos.find((a) => {
+	// 			return a.userId === userId
+	// 		})
+	// 	})
+	// 	return doc
+	// }
 	static async findDayById(dayId) {
 		const daySnap = new Day(dayId)
 		await daySnap.pull()

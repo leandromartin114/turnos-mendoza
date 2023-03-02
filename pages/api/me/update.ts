@@ -18,12 +18,15 @@ async function patchHandler(req: NextApiRequest, res: NextApiResponse, token) {
 	}
 }
 
-const validateHandler = bodySchemaMiddleware(newUserBodySchema, patchHandler)
+const authorizedHandler = authMiddleware(patchHandler)
 
-const authorizedHandler = authMiddleware(validateHandler)
+const validateHandler = bodySchemaMiddleware(
+	newUserBodySchema,
+	authorizedHandler
+)
 
 const handler = method({
-	patch: authorizedHandler,
+	patch: validateHandler,
 })
 
 export default CORSMiddleware(handler)
