@@ -17,24 +17,15 @@ export class Day {
 	async push() {
 		this.ref.update(this.data)
 	}
-	static async createNewDay() {
-		const date = new Date()
-		const id = date.toDateString()
-		const newDaySnap = await collection.doc(id).set({
+	static async createNewDay(date: string) {
+		const newDaySnap = await collection.doc(date).set({
 			appointments: [],
 		})
-		return newDaySnap
+		const newDay = new Day(date)
+		newDay.pull()
+		return newDay
 	}
-	// static async findUserAppointment(userId) {
-	// 	const snap = await collection.get()
-	// 	const doc = snap.docs.find((d) => {
-	// 		const appos = d.data().appointments
-	// 		return appos.find((a) => {
-	// 			return a.userId === userId
-	// 		})
-	// 	})
-	// 	return doc
-	// }
+
 	static async findDayById(dayId) {
 		const daySnap = new Day(dayId)
 		await daySnap.pull()

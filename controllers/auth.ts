@@ -31,7 +31,7 @@ export async function createAuthAndUser(data: UserData) {
 			phoneNumber: data.phoneNumber,
 			address: data.address,
 			document: data.document,
-			appointment: 0,
+			appointment: '',
 		})
 		const newAuth = await Auth.createNewAuth({
 			email: data.email,

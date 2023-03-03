@@ -4,7 +4,7 @@ type UserData = {
 	phoneNumber: number
 	address: string
 	document: number
-	appointment?: number
+	appointment?: string
 }
 
 type AppoData = {
