@@ -10,13 +10,16 @@ export class Day {
 		this.id = id
 		this.ref = collection.doc(id)
 	}
+
 	async pull() {
 		const snap = await this.ref.get()
 		this.data = snap.data()
 	}
+
 	async push() {
 		this.ref.update(this.data)
 	}
+
 	static async createNewDay(date: string) {
 		const newDaySnap = await collection.doc(date).set({
 			appointments: [],
@@ -26,7 +29,7 @@ export class Day {
 		return newDay
 	}
 
-	static async findDayById(dayId) {
+	static async findDayById(dayId: string) {
 		const daySnap = new Day(dayId)
 		await daySnap.pull()
 		return daySnap.data

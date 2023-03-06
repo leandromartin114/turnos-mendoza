@@ -1,28 +1,50 @@
+import uniqid from 'uniqid'
+import _ from 'lodash'
 import { User } from 'models/user'
 import { Day } from 'models/day'
-import { sendAppointmentByEmail } from 'lib/sendgrid'
+import {
+	sendAppointmentByEmail,
+	sendDeletedAppointmentByEmail,
+} from 'lib/sendgrid'
+import { AppoData } from 'lib/types'
 
-export async function checkUserAppointment(userId) {
+// Checks if the user has an appointment
+export async function checkUserAppointment(userId: string) {
 	const user = new User(userId)
 	await user.pull()
 	let result
-	if (user.data.appointment) {
-		result = true
-	} else {
+	if (user.data.appointment === 'no') {
 		result = false
+	} else {
+		result = true
 	}
 	return result
 }
-// grabar el appo en el user y mandar por mail la confirmación
-export async function generateNewAppointment(date, data) {
+// Records the date at user entity
+async function recordUserAppo(date: string, userId: string) {
+	const user = new User(userId)
+	await user.pull()
+	user.data.appointment = date
+	await user.push()
+}
+
+// Creates an appointment and send the detail by email
+export async function generateNewAppointment(date: string, data: AppoData) {
 	const cleanDate = date.toString()
+	const appoData = {
+		id: uniqid(),
+		date: cleanDate,
+		...data,
+	}
 	const existantDay = await Day.findDayById(cleanDate)
 	if (existantDay) {
 		if (existantDay.appointments.length < 10) {
 			const day = new Day(date)
 			await day.pull()
-			day.data.appointments.push(data)
+			day.data.appointments.push(appoData)
 			await day.push()
+			await recordUserAppo(date, data.userId)
+			await sendAppointmentByEmail(appoData)
 			return day.data
 		} else {
 			return null
@@ -31,13 +53,32 @@ export async function generateNewAppointment(date, data) {
 		const newDay = await Day.createNewDay(cleanDate)
 		const day = new Day(date)
 		await day.pull()
-		day.data.appointments.push(data)
+		day.data.appointments.push(appoData)
 		await day.push()
+		await recordUserAppo(date, data.userId)
+		await sendAppointmentByEmail(appoData)
 		return day.data
 	}
 }
 
+// Deletes an appointment
+export async function deleteAppointment(date: string, userId: string) {
+	const cleanDate = date.toString()
+	const day = await new Day(cleanDate)
+	await day.pull()
+	const newArrayOfAppointments = day.data.appointments
+	const removed = _.remove(newArrayOfAppointments, (a: any) => {
+		return a.userId === userId
+	})
+	await sendDeletedAppointmentByEmail(removed[0])
+	day.data.appointments = newArrayOfAppointments
+	await day.push()
+	return day.data
+}
+
+// Gets all the appointments by date
 export async function getAppointments(date) {
-	const order = await Day.findDayById(date)
-	return order
+	const cleanDate = date.toString()
+	const day = await Day.findDayById(cleanDate)
+	return day
 }

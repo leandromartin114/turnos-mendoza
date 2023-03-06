@@ -8,10 +8,12 @@ type UserData = {
 }
 
 type AppoData = {
-	appoId: number
 	fullName: string
 	email: string
-	date: string
+	document: number
+	userId: string
+	id?: string
+	date?: string
 }
 
 export type { UserData, AppoData }

@@ -1,6 +1,7 @@
 import { Auth } from 'models/auth'
 import { User } from 'models/user'
 
+// Gets the user profile info
 export async function getUserData(userId: string) {
 	const user = new User(userId)
 	await user.pull()
@@ -11,6 +12,7 @@ export async function getUserData(userId: string) {
 	}
 }
 
+// Gets the user appointment date
 export async function getUserAppointment(userId: string) {
 	const user = new User(userId)
 	await user.pull()
@@ -21,6 +23,7 @@ export async function getUserAppointment(userId: string) {
 	}
 }
 
+// Updates the user data
 export async function updateUser(userId: string, data: any) {
 	const user = new User(userId)
 	await user.pull()

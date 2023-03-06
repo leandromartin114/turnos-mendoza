@@ -8,7 +8,7 @@ import { UserData } from 'lib/types'
 
 const random = gen.create()
 
-// Find a user in auth collection with an email
+// Finds a user in auth collection with an email
 export async function findAuth(email: string) {
 	const auth = await Auth.findByEmail(email)
 	if (auth) {
@@ -18,7 +18,7 @@ export async function findAuth(email: string) {
 	}
 }
 
-// Find a user and if it doesn't exist, create one
+// Finds a user and if it doesn't exist, creates one
 export async function createAuthAndUser(data: UserData) {
 	const auth = await findAuth(data.email)
 	if (auth) {
@@ -31,7 +31,7 @@ export async function createAuthAndUser(data: UserData) {
 			phoneNumber: data.phoneNumber,
 			address: data.address,
 			document: data.document,
-			appointment: '',
+			appointment: 'no',
 		})
 		const newAuth = await Auth.createNewAuth({
 			email: data.email,
@@ -43,7 +43,7 @@ export async function createAuthAndUser(data: UserData) {
 	}
 }
 
-// Send code to the user email for login
+// Sends code to the user email for login
 export async function sendCode(email: string) {
 	const auth = await findAuth(email)
 	if (auth) {
