@@ -39,11 +39,12 @@ export async function generateNewAppointment(date: string, data: AppoData) {
 	const existantDay = await Day.findDayById(cleanDate)
 	if (existantDay) {
 		if (existantDay.appointments.length < 10) {
-			const day = new Day(date)
+			const day = new Day(cleanDate)
 			await day.pull()
 			day.data.appointments.push(appoData)
+			await Day.createNewRealTimeAppo(cleanDate, appoData)
 			await day.push()
-			await recordUserAppo(date, data.userId)
+			await recordUserAppo(cleanDate, data.userId)
 			await sendAppointmentByEmail(appoData)
 			return day.data
 		} else {
@@ -51,11 +52,12 @@ export async function generateNewAppointment(date: string, data: AppoData) {
 		}
 	} else {
 		const newDay = await Day.createNewDay(cleanDate)
-		const day = new Day(date)
+		const day = new Day(cleanDate)
 		await day.pull()
 		day.data.appointments.push(appoData)
+		await Day.createNewRealTimeAppo(cleanDate, appoData)
 		await day.push()
-		await recordUserAppo(date, data.userId)
+		await recordUserAppo(cleanDate, data.userId)
 		await sendAppointmentByEmail(appoData)
 		return day.data
 	}

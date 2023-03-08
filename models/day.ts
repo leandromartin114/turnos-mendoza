@@ -1,6 +1,7 @@
-import { firestore } from 'lib/firebase'
+import { firestore, rtdb } from 'lib/firebase'
 
-const collection = firestore.collection('day')
+const collection = firestore.collection('days')
+const realTimeRef = rtdb.ref('days')
 
 export class Day {
 	ref: FirebaseFirestore.DocumentReference
@@ -29,9 +30,20 @@ export class Day {
 		return newDay
 	}
 
+	static async createNewRealTimeAppo(date: string, data: any) {
+		const newAppo = await realTimeRef
+			.child(date)
+			.child('appointments')
+			.push(data)
+	}
+
 	static async findDayById(dayId: string) {
 		const daySnap = new Day(dayId)
 		await daySnap.pull()
 		return daySnap.data
+	}
+
+	static async getRTDayAppointments(date: string) {
+		// buscar en la real time db y obtener el length de cada dia
 	}
 }

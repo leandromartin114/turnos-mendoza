@@ -44,6 +44,7 @@
 		"yup": "^0.32.11"
 	},
 	"devDependencies": {
+		"@firebase/database-types": "^0.10.4",
 		"@types/node": "18.8.3",
 		"@types/react": "18.0.21",
 		"dotenv": "^16.0.3",
