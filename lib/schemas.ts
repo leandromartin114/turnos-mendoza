@@ -12,6 +12,16 @@ let newUserBodySchema = yup
 	.noUnknown(true)
 	.strict()
 
+let newAdminBodySchema = yup
+	.object()
+	.shape({
+		fullName: yup.string().required(),
+		email: yup.string().email().required(),
+		phoneNumber: yup.number().required(),
+	})
+	.noUnknown(true)
+	.strict()
+
 let getTokenBodySchema = yup
 	.object()
 	.shape({
@@ -43,5 +53,6 @@ export {
 	appointmentQuerySchema,
 	appointmentBodySchema,
 	newUserBodySchema,
+	newAdminBodySchema,
 	getTokenBodySchema,
 }
