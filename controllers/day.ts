@@ -20,6 +20,7 @@ export async function checkUserAppointment(userId: string) {
 	}
 	return result
 }
+
 // Records the date at user entity
 async function recordUserAppo(date: string, userId: string) {
 	const user = new User(userId)
@@ -79,8 +80,15 @@ export async function deleteAppointment(date: string, userId: string) {
 }
 
 // Gets all the appointments by date
-export async function getAppointments(date) {
+export async function getAppointments(date: string) {
 	const cleanDate = date.toString()
 	const day = await Day.findDayById(cleanDate)
 	return day
+}
+
+// Gets the count of appointments in the real time db by date
+export async function getRealTimeAppointments(date: string) {
+	const cleanDate = date.toString()
+	const count = await Day.getRTDayAppointments(cleanDate)
+	return count
 }

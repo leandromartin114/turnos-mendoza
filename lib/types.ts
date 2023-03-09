@@ -7,6 +7,12 @@ type UserData = {
 	appointment?: string
 }
 
+type AdminData = {
+	fullName: string
+	email: string
+	phoneNumber: number
+}
+
 type AppoData = {
 	fullName: string
 	email: string
@@ -16,4 +22,4 @@ type AppoData = {
 	date?: string
 }
 
-export type { UserData, AppoData }
+export type { UserData, AdminData, AppoData }

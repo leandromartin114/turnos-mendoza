@@ -44,6 +44,7 @@ export class Day {
 	}
 
 	static async getRTDayAppointments(date: string) {
-		// buscar en la real time db y obtener el length de cada dia
+		const appos = await realTimeRef.child(date).child('appointments').get()
+		return appos.numChildren()
 	}
 }
