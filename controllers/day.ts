@@ -22,11 +22,12 @@ export async function checkUserAppointment(userId: string) {
 }
 
 // Records the date at user entity
-async function recordUserAppo(date: string, userId: string) {
+export async function recordUserAppo(date: string, userId: string) {
 	const user = new User(userId)
 	await user.pull()
 	user.data.appointment = date
 	await user.push()
+	return true
 }
 
 // Creates an appointment and send the detail by email
@@ -39,7 +40,7 @@ export async function generateNewAppointment(date: string, data: AppoData) {
 	}
 	const existantDay = await Day.findDayById(cleanDate)
 	if (existantDay) {
-		if (existantDay.appointments.length < 10) {
+		if (existantDay.appointments.length < 5) {
 			const day = new Day(cleanDate)
 			await day.pull()
 			day.data.appointments.push(appoData)
@@ -73,6 +74,7 @@ export async function deleteAppointment(date: string, userId: string) {
 	const removed = _.remove(newArrayOfAppointments, (a: any) => {
 		return a.userId === userId
 	})
+	await Day.deleteRealTimeAppo(cleanDate, userId)
 	await sendDeletedAppointmentByEmail(removed[0])
 	day.data.appointments = newArrayOfAppointments
 	await day.push()

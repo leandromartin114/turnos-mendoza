@@ -9,7 +9,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next",
-		"test": "ava"
+		"test": "ava ./controllers/day.test.ts"
 	},
 	"ava": {
 		"nodeArguments": [

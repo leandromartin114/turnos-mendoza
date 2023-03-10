@@ -1,4 +1,5 @@
 import { firestore, rtdb } from 'lib/firebase'
+import _ from 'lodash'
 
 const collection = firestore.collection('days')
 const realTimeRef = rtdb.ref('days')
@@ -35,6 +36,11 @@ export class Day {
 			.child(date)
 			.child('appointments')
 			.push(data)
+	}
+
+	static async deleteRealTimeAppo(date: string, userId: string) {
+		const toDelete = await realTimeRef.child(date).child('appointments').get()
+		console.log(toDelete)
 	}
 
 	static async findDayById(dayId: string) {
