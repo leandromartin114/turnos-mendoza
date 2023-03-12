@@ -32,15 +32,15 @@ export class Day {
 	}
 
 	static async createNewRealTimeAppo(date: string, data: any) {
-		const newAppo = await realTimeRef
+		await realTimeRef
 			.child(date)
 			.child('appointments')
-			.push(data)
+			.child(data.userId)
+			.set(data)
 	}
 
 	static async deleteRealTimeAppo(date: string, userId: string) {
-		const toDelete = await realTimeRef.child(date).child('appointments').get()
-		console.log(toDelete)
+		await realTimeRef.child(date).child('appointments').child(userId).remove()
 	}
 
 	static async findDayById(dayId: string) {

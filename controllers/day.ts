@@ -8,6 +8,7 @@ import {
 } from 'lib/sendgrid'
 import { AppoData } from 'lib/types'
 
+// USER FUNCTIONS
 // Checks if the user has an appointment
 export async function checkUserAppointment(userId: string) {
 	const user = new User(userId)
@@ -30,6 +31,18 @@ export async function recordUserAppo(date: string, userId: string) {
 	return true
 }
 
+// Deletes the date at user entity
+export async function deleteUserAppo(userId: string) {
+	const user = new User(userId)
+	await user.pull()
+	user.data.appointment = 'no'
+	await user.push()
+	return true
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// DAY FUNCTIONS
 // Creates an appointment and send the detail by email
 export async function generateNewAppointment(date: string, data: AppoData) {
 	const cleanDate = date.toString()
@@ -74,6 +87,7 @@ export async function deleteAppointment(date: string, userId: string) {
 	const removed = _.remove(newArrayOfAppointments, (a: any) => {
 		return a.userId === userId
 	})
+	await deleteUserAppo(userId)
 	await Day.deleteRealTimeAppo(cleanDate, userId)
 	await sendDeletedAppointmentByEmail(removed[0])
 	day.data.appointments = newArrayOfAppointments
@@ -81,6 +95,9 @@ export async function deleteAppointment(date: string, userId: string) {
 	return day.data
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
+// ADMIN FUNCTIONS
 // Gets all the appointments by date
 export async function getAppointments(date: string) {
 	const cleanDate = date.toString()
