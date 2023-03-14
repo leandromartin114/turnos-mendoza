@@ -14,4 +14,12 @@ https://turnosmendoza-api.vercel.app
 
 ## Tech Stack
 
-Typescript NodeJS NextJS Firestore Firebase Sendgrid Ava jsonwebtoken Yup
+- Typescript
+- NodeJS
+- NextJS
+- Firestore
+- Firebase
+- Sendgrid
+- Ava
+- jsonwebtoken
+- Yup
