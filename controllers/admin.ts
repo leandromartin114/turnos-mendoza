@@ -17,7 +17,7 @@ export async function createAuthAndAdmin(data: AdminData) {
 		})
 		const newAuth = await Auth.createNewAuth({
 			email: data.email,
-			userId: newAdmin.id,
+			adminId: newAdmin.id,
 			code: 0,
 			expires: new Date(),
 		})

@@ -31,8 +31,6 @@ let getTokenBodySchema = yup
 	.noUnknown(true)
 	.strict()
 
-let appointmentQuerySchema = yup.mixed()
-
 let appointmentBodySchema = yup
 	.array()
 	.of(
@@ -50,7 +48,6 @@ let appointmentBodySchema = yup
 	.strict()
 
 export {
-	appointmentQuerySchema,
 	appointmentBodySchema,
 	newUserBodySchema,
 	newAdminBodySchema,

@@ -3,7 +3,7 @@ import method from 'micro-method-router'
 import { authMiddleware, CORSMiddleware } from 'lib/middlewares'
 import { getUserData } from 'controllers/user'
 
-//Get user info
+//Gets user info
 async function getHandler(req: NextApiRequest, res: NextApiResponse, token) {
 	try {
 		const userData = await getUserData(token.userId)

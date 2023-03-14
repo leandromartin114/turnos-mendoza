@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import parseBearerToken from 'parse-bearer-token'
-import { decodeToken } from './jwt'
 import * as yup from 'yup'
 import NextCors from 'nextjs-cors'
+import { decodeToken } from './jwt'
 
 // Authentication middleware
 export function authMiddleware(callback) {

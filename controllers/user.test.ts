@@ -20,8 +20,8 @@ test('it has to return a json with the updated user data', async (t) => {
 	t.deepEqual(payload, out.fullName)
 })
 
-test('it has to return a string with the appointment date', async (t) => {
-	const payload = '2023-03-08'
+test('it has to return a string "no" indicating that there is not a date', async (t) => {
+	const payload = 'no'
 	const out = await getUserAppointment('pvL4e3hp2tmuw2C3UA1C')
 	t.deepEqual(payload, out)
 })

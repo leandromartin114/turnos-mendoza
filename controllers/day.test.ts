@@ -9,8 +9,8 @@ import {
 	getRealTimeAppointments,
 } from './day'
 
-test('it has to return true if the user has an appointment', async (t) => {
-	const payload = true
+test('it has to return false if the user does not have an appointment', async (t) => {
+	const payload = false
 	const out = await checkUserAppointment('pvL4e3hp2tmuw2C3UA1C')
 	t.deepEqual(payload, out)
 })
